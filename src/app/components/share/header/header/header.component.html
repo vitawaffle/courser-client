@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 sticky-top">
+    <div class="container-fluid">
+        <a routerLink="/home" class="navbar-brand">Courser</a>
+        <button type="button"
+                class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#headerContent"
+                aria-controls="headerContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="headerContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li app-header-link url="/home">Home</li>
+            </ul>
+            <div class="d-flex">
+                <a *ngIf="!isAuthenticated" routerLink="/login" class="btn btn-outline-primary me-2">Log in</a>
+                <a *ngIf="!isAuthenticated" routerLink="/logout" class="btn btn-primary">Sign in</a>
+                <button *ngIf="isAuthenticated"
+                        type="button"
+                        class="btn btn-outline-primary"
+                        (onclick)="logout()">
+                    Log out
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
