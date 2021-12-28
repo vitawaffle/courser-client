@@ -1,0 +1,9 @@
+<div class="d-grid gap-2 mb-2">
+    <button type="submit" class="btn btn-primary btn-lg" [disabled]="isLoading">
+        <span *ngIf="isLoading"
+              class="spinner-grow spinner-grow-sm"
+              role="status"
+              aria-hidden="true"></span>
+        <ng-content></ng-content>
+    </button>
+</div>

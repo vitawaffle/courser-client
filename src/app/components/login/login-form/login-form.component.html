@@ -1,0 +1,28 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="mb-3">
+        <label for="email" class="form-label">Email*</label>
+        <input formControlName="email"
+               type="email"
+               id="email"
+               class="form-control"
+               [class.is-invalid]="isEmailInvalid || isInvalidCredentials">
+        <div app-invalid-feedback [control]="emailControl" errorName="required">
+            This field is required
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password*</label>
+        <input formControlName="password"
+               type="password"
+               id="password"
+               class="form-control"
+               [class.is-invalid]="isPasswordInvalid || isInvalidCredentials">
+        <div app-invalid-feedback [control]="passwordControl" errorName="required">
+            This field is required
+        </div>
+        <div *ngIf="isInvalidCredentials" class="invalid-feedback">
+            Invalid credentials
+        </div>
+    </div>
+    <app-submit-button [isLoading]="isLoading">Log in</app-submit-button>
+</form>
