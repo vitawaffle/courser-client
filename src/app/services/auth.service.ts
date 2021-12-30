@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, finalize } from 'rxjs/operators';
+import { HandlingArguments } from './handling-arguments';
 import { UserEntity } from '../entities/user.entity';
 import { CredentialsDTO } from '../dto/credentials.dto';
 
@@ -13,17 +14,17 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
 
-  get isAuthenticated() {
+  get isAuthenticated(): boolean {
     return !!this.user;
   }
 
-  checkAuth(
-    onSuccess?: () => void,
-    onUnauthorized?: () => void,
-    onError?: () => void,
-    onFinal?: () => void
-  ) {
-    this.httpClient.get<UserEntity>('/users/me').pipe(catchError(error => {
+  checkAuth({
+    onSuccess,
+    onFinal,
+    onError,
+    onUnauthorized,
+  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onUnauthorized'> = {}): void {
+    this.httpClient.get<UserEntity>('/users/me').pipe(catchError((error: any) => {
       switch (error.status) {
         case 401:
           this.logout();
@@ -34,7 +35,7 @@ export class AuthService {
       }
 
       if (onError) {
-        onError();
+        onError(error);
       }
       throw error;
     }), finalize(() => {
@@ -49,8 +50,8 @@ export class AuthService {
       }
     });
   }
- 
-  logout(onSuccess?: () => void) {
+
+  logout({ onSuccess, }: Pick<HandlingArguments, 'onSuccess'> = {}): void {
     this.user = undefined;
     localStorage.removeItem('authToken');
 
@@ -59,16 +60,15 @@ export class AuthService {
     }
   }
 
-  login(
-    credentials: CredentialsDTO,
-    onSuccess?: () => void,
-    onUnauthorized?: () => void,
-    onError?: () => void,
-    onFinal?: () => void
-  ) {
+  login(credentials: CredentialsDTO, {
+    onSuccess,
+    onFinal,
+    onError,
+    onUnauthorized,
+  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onUnauthorized'> = {}): void {
     this.httpClient.post('/auth/login', credentials, {
       responseType: 'text'
-    }).pipe(catchError(error => {
+    }).pipe(catchError((error: any) => {
       switch (error.status) {
         case 401:
           if (onUnauthorized) {
@@ -78,14 +78,14 @@ export class AuthService {
       }
 
       if (onError) {
-        onError();
+        onError(error);
       }
       throw error;
     }), finalize(() => {
       if (onFinal) {
         onFinal();
       }
-    })).subscribe(authToken => {
+    })).subscribe((authToken: string) => {
       localStorage.setItem('authToken', authToken);
 
       if (onSuccess) {
@@ -94,15 +94,14 @@ export class AuthService {
     });
   }
 
-  signin(
-    credentials: CredentialsDTO,
-    onSuccess?: () => void,
-    onError?: () => void,
-    onFinal?: () => void
-  ) {
+  signin(credentials: CredentialsDTO, {
+    onSuccess,
+    onFinal,
+    onError,
+  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError'> = {}): void {
     this.httpClient.post('/auth/signin', credentials, {
       responseType: 'text'
-    }).pipe(catchError(error => {
+    }).pipe(catchError((error: any) => {
       if (onError) {
         onError();
       }
@@ -111,7 +110,7 @@ export class AuthService {
       if (onFinal) {
         onFinal();
       }
-    })).subscribe(authToken => {
+    })).subscribe((authToken: string) => {
       localStorage.setItem('authToken', authToken);
 
       if (onSuccess) {

@@ -1,0 +1,48 @@
+<form [formGroup]="signinForm" (ngSubmit)="signin()">
+    <div class="mb-3">
+        <label for="email" class="form-label">Email*</label>
+        <input formControlName="email"
+               type="email"
+               id="email"
+               class="form-control"
+               [class.is-invalid]="isEmailInvalid">
+        <div app-invalid-feedback [control]="emailControl" errorName="required">
+            This field is required
+        </div>
+        <div app-invalid-feedback [control]="emailControl" errorName="email">
+            Invalid email format
+        </div>
+        <div app-invalid-feedback [control]="emailControl" errorName="unique">
+            This email is already taken
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password*</label>
+        <input formControlName="password"
+               type="password"
+               id="password"
+               class="form-control"
+               [class.is-invalid]="isPasswordInvalid">
+        <div app-invalid-feedback [control]="passwordControl" errorName="required">
+            This field is required
+        </div>
+        <div app-invalid-feedback [control]="passwordControl" errorName="password">
+            Invalid password format
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="confirmedPassword" class="form-label">Confirm password*</label>
+        <input formControlName="confirmedPassword"
+               type="password"
+               id="confirmedPassword"
+               class="form-control"
+               [class.is-invalid]="isConfirmedPasswordInvalid">
+        <div app-invalid-feedback [control]="confirmedPasswordControl" errorName="required">
+            This field is required
+        </div>
+        <div app-invalid-feedback [control]="confirmedPasswordControl" errorName="passwordMismatch">
+            Password mismatch
+        </div>
+    </div>
+    <app-submit-button [isLoading]="isLoading">Sign in</app-submit-button>
+</form>

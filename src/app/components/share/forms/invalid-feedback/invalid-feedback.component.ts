@@ -13,11 +13,11 @@ export class InvalidFeedbackComponent {
   control: AbstractControl = this.formBuilder.control('');
 
   @Input()
-  errorName = '';
+  errorName: string = '';
 
   constructor(private formBuilder: FormBuilder, private formUtil: FormUtil) { }
 
-  get isShown() {
+  get isShown(): boolean {
     return this.formUtil.isControlInvalid(this.control) && this.control.hasError(this.errorName);
   }
 

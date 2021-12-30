@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
 export class SubmitButtonComponent {
 
   @Input()
-  isLoading = false;
+  isLoading: boolean = false;
 
 }
