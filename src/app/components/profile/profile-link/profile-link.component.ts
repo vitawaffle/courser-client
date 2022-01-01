@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: '[app-header-link]',
-  templateUrl: './header-link.component.html',
-  styleUrls: ['./header-link.component.scss']
+  selector: '[app-profile-link]',
+  templateUrl: './profile-link.component.html',
+  styleUrls: ['./profile-link.component.scss']
 })
-export class HeaderLinkComponent {
+export class ProfileLinkComponent {
 
   @Input()
   url: string = '';

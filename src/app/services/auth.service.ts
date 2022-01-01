@@ -4,6 +4,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { HandlingArguments } from './handling-arguments';
 import { UserEntity } from '../entities/user.entity';
 import { CredentialsDTO } from '../dto/credentials.dto';
+import { ChangePasswordDTO } from '../dto/change-password.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -113,6 +114,36 @@ export class AuthService {
     })).subscribe((authToken: string) => {
       localStorage.setItem('authToken', authToken);
 
+      if (onSuccess) {
+        onSuccess();
+      }
+    });
+  }
+
+  changePassword(changePasswordDTO: ChangePasswordDTO, {
+    onSuccess,
+    onFinal,
+    onError,
+    onUnauthorized,
+  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onUnauthorized'> = {}): void {
+    this.httpClient.post('/auth/change-password', changePasswordDTO).pipe(catchError((error: any) => {
+      switch (error.status) {
+        case 401:
+          if (onUnauthorized) {
+            onUnauthorized();
+          }
+          break;
+      }
+
+      if (onError) {
+        onError(error);
+      }
+      throw error;
+    }), finalize(() => {
+      if (onFinal) {
+        onFinal();
+      }
+    })).subscribe((response: any) => {
       if (onSuccess) {
         onSuccess();
       }

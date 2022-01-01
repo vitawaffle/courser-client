@@ -17,6 +17,11 @@ import { SubmitButtonComponent } from './components/share/forms/submit-button/su
 import { SigninLayoutComponent } from './components/signin/signin-layout/signin-layout.component';
 import { SigninFormComponent } from './components/signin/signin-form/signin-form.component';
 import { CopyrightComponent } from './components/share/copyright/copyright.component';
+import { ProfileLayoutComponent } from './components/profile/profile-layout/profile-layout.component';
+import { ProfileMainComponent } from './components/profile/profile-main/profile-main.component';
+import { ProfileLinkComponent } from './components/profile/profile-link/profile-link.component';
+import { ProfileSecurityComponent } from './components/profile/profile-security/profile-security.component';
+import { PasswordChangeFormComponent } from './components/profile/password-change-form/password-change-form.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,11 @@ import { CopyrightComponent } from './components/share/copyright/copyright.compo
     SigninLayoutComponent,
     SigninFormComponent,
     CopyrightComponent,
+    ProfileLayoutComponent,
+    ProfileMainComponent,
+    ProfileLinkComponent,
+    ProfileSecurityComponent,
+    PasswordChangeFormComponent,
   ],
   imports: [
     BrowserModule,

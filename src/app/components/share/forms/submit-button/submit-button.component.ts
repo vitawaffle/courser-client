@@ -10,4 +10,10 @@ export class SubmitButtonComponent {
   @Input()
   isLoading: boolean = false;
 
+  @Input()
+  isBlock: boolean = false;
+
+  @Input()
+  isDisabled: boolean = false;
+
 }

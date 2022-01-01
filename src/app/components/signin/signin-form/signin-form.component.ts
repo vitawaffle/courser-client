@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, Validators, FormGroup } from '@angular/fo
 import { Router } from '@angular/router';
 import { PasswordValidator } from '../../../validators/password.validator';
 import { UniqueEmailValidator } from '../../../validators/unique-email.validator';
-import { EqualsValidator } from 'src/app/validators/unique.validator';
+import { EqualsValidator } from 'src/app/validators/equals.validator';
 import { FormUtil } from 'src/app/utils/form.util';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -62,6 +62,10 @@ export class SigninFormComponent {
 
   get isConfirmedPasswordInvalid(): boolean {
     return this.isInvalid(this.confirmedPasswordControl);
+  }
+
+  get isSigninFormInvalid(): boolean {
+    return this.signinForm.invalid;
   }
 
   isInvalid(control: AbstractControl): boolean {

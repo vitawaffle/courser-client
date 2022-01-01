@@ -43,6 +43,10 @@ export class LoginFormComponent {
     return this.formUtil.isControlInvalid(this.passwordControl);
   }
 
+  get isLoginFormInvalid(): boolean {
+    return this.loginForm.invalid;
+  }
+
   login(): void {
     this.isInvalidCredentials = false;
     this.isLoading = true;

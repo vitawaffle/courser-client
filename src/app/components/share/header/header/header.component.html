@@ -13,6 +13,7 @@
         <div id="headerContent" class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li app-header-link url="/home">Home</li>
+                <li *ngIf="isAuthenticated" app-header-link url="/profile">Profile</li>
             </ul>
             <div class="d-flex">
                 <a *ngIf="!isAuthenticated" routerLink="/login" class="btn btn-outline-primary me-2">Log in</a>

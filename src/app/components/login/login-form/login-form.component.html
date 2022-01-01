@@ -24,5 +24,9 @@
             Invalid credentials
         </div>
     </div>
-    <app-submit-button [isLoading]="isLoading">Log in</app-submit-button>
+    <app-submit-button [isLoading]="isLoading"
+                       [isBlock]="true"
+                       [isDisabled]="isLoginFormInvalid">
+        Log in
+    </app-submit-button>
 </form>
