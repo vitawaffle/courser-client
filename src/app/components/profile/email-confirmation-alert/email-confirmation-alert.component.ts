@@ -20,10 +20,14 @@ export class EmailConfirmationAlertComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  constructor(private emailService: EmailService) { }
+  constructor(private emailService: EmailService, private authService: AuthService) { }
 
   get isResendButtonDisabled(): boolean {
     return this.isCanBeResendLoading || this.isLoading || this.isTimerActive;
+  }
+
+  get isShown(): boolean {
+    return !!this.authService.user && !this.authService.user.emailConfirmedAt;
   }
 
   ngOnInit(): void {
