@@ -23,6 +23,7 @@ import { ProfileLinkComponent } from './components/profile/profile-link/profile-
 import { ProfileSecurityComponent } from './components/profile/profile-security/profile-security.component';
 import { PasswordChangeFormComponent } from './components/profile/password-change-form/password-change-form.component';
 import { EmailConfirmationAlertComponent } from './components/profile/email-confirmation-alert/email-confirmation-alert.component';
+import { NameFormComponent } from './components/profile/name-form/name-form.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { EmailConfirmationAlertComponent } from './components/profile/email-conf
     ProfileSecurityComponent,
     PasswordChangeFormComponent,
     EmailConfirmationAlertComponent,
+    NameFormComponent,
   ],
   imports: [
     BrowserModule,
