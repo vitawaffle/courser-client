@@ -1,1 +1,31 @@
-
+<div *ngIf="isDataLoading" class="text-center">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<form *ngIf="!isDataLoading" [formGroup]="nameForm" (ngSubmit)="saveName()">
+    <div class="mb-3">
+        <label for="languageId" class="form-label">Language</label>
+        <select formControlName="languageId"
+                id="languageId"
+                class="form-select"
+                (change)="handleLanguageIdChange()">
+            <option *ngFor="let language of languages" [value]="language.id">
+                {{getLanguageNameByCode(language.code)}}
+            </option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="firstName" class="form-label">First name</label>
+        <input formControlName="firstName" type="text" id="firstName" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="lastName" class="form-label">Last name</label>
+        <input formControlName="lastName" type="text" id="lastName" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="patronymic" class="form-label">Patronymic</label>
+        <input formControlName="patronymic" type="text" id="patronymic" class="form-control">
+    </div>
+    <app-submit-button [isLoading]="isLoading">Save</app-submit-button>
+</form>

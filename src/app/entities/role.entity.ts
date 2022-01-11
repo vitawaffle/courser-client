@@ -1,5 +1,5 @@
-import { Entity } from './entity';
+import { NumberIdEntity } from './number-id-entity';
 
-export interface RoleEntity extends Entity {
+export interface RoleEntity extends NumberIdEntity {
     name: string;
 }

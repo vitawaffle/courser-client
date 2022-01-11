@@ -24,6 +24,9 @@ import { ProfileSecurityComponent } from './components/profile/profile-security/
 import { PasswordChangeFormComponent } from './components/profile/password-change-form/password-change-form.component';
 import { EmailConfirmationAlertComponent } from './components/profile/email-confirmation-alert/email-confirmation-alert.component';
 import { NameFormComponent } from './components/profile/name-form/name-form.component';
+import { ErrorComponent } from './components/errors/error/error.component';
+import { ErrorLayoutComponent } from './components/errors/error-layout/error-layout.component';
+import { PageNotFoundErrorComponent } from './components/errors/page-not-found-error/page-not-found-error.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import { NameFormComponent } from './components/profile/name-form/name-form.comp
     PasswordChangeFormComponent,
     EmailConfirmationAlertComponent,
     NameFormComponent,
+    ErrorComponent,
+    ErrorLayoutComponent,
+    PageNotFoundErrorComponent,
   ],
   imports: [
     BrowserModule,
