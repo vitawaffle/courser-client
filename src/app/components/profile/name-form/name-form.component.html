@@ -3,7 +3,7 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
-<form *ngIf="!isDataLoading" [formGroup]="nameForm" (ngSubmit)="saveName()">
+<form *ngIf="!isDataLoading" [formGroup]="nameForm" (ngSubmit)="handleSubmitButtonClick()">
     <div class="mb-3">
         <label for="languageId" class="form-label">Language</label>
         <select formControlName="languageId"

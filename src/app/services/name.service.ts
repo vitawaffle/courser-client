@@ -48,4 +48,25 @@ export class NameService {
     });
   }
 
+  deleteName(languageId: number, {
+    onSuccess,
+    onFinal,
+    onError,
+  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError'> = {}) {
+    this.httpClient.delete(`/names/me/${languageId}`).pipe(catchError((error: any) => {
+      if (onError) {
+        onError(error);
+      }
+      throw error;
+    }), finalize(() => {
+      if (onFinal) {
+        onFinal();
+      }
+    })).subscribe(() => {
+      if (onSuccess) {
+        onSuccess();
+      }
+    });
+  }
+
 }

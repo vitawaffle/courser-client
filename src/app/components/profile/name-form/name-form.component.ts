@@ -56,8 +56,24 @@ export class NameFormComponent implements OnInit {
     return this.nameForm.controls.patronymic;
   }
 
+  get languageId(): number {
+    return parseInt(this.languageIdControl.value);
+  }
+
+  get firstName(): string {
+    return this.firstNameControl.value;
+  }
+
+  get lastName(): string {
+    return this.lastNameControl.value;
+  }
+
+  get patronymic(): string {
+    return this.patronymicControl.value;
+  }
+
   updateNameValues(): void {
-    const name = this.names.find(name => name.languageId == this.languageIdControl.value);
+    const name = this.names.find(name => name.languageId == this.languageId);
     this.nameForm.patchValue({
       firstName: name ? name.firstName : '',
       lastName: name ? name.lastName : '',
@@ -99,17 +115,37 @@ export class NameFormComponent implements OnInit {
     this.updateNameValues();
   }
 
+  isNameFormEmpty(): boolean {
+    return this.firstName === '' && this.lastName === '' && this.patronymic === '';
+  }
+
   saveName(): void {
     this.isLoading = true;
     this.nameService.saveName({
-      languageId: this.languageIdControl.value,
-      firstName: this.firstNameControl.value,
-      lastName: this.lastNameControl.value,
-      patronymic: this.patronymicControl.value,
+      languageId: this.languageId,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      patronymic: this.patronymic,
     }, {
       onSuccess: () => this.loadNames(),
       onFinal: () => this.isLoading = false,
     });
+  }
+
+  deleteName(): void {
+    this.isLoading = true;
+    this.nameService.deleteName(this.languageId, {
+      onSuccess: () => this.loadNames(),
+      onFinal: () => this.isLoading = false,
+    });
+  }
+
+  handleSubmitButtonClick(): void {
+    if (this.isNameFormEmpty()) {
+      this.deleteName();
+    } else {
+      this.saveName();
+    }
   }
 
 }
