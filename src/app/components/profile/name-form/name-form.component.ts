@@ -30,6 +30,8 @@ export class NameFormComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  isSuccessAlertShown: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private languageService: LanguageService,
@@ -93,13 +95,19 @@ export class NameFormComponent implements OnInit {
       })).subscribe(languages => this.languages = languages);
   }
 
-  loadNames(): void {
+  loadNames(onSuccess?: () => void): void {
     this.isNamesLoading = true;
     this.nameService.getAllNames()
       .pipe(finalize(() => {
         this.updateNameValues();
         this.isNamesLoading = false;
-      })).subscribe(names => this.names = names);
+      })).subscribe(names => {
+        this.names = names;
+
+        if (onSuccess) {
+          onSuccess();
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -119,7 +127,7 @@ export class NameFormComponent implements OnInit {
     return this.firstName === '' && this.lastName === '' && this.patronymic === '';
   }
 
-  saveName(): void {
+  saveName(onSuccess?: () => void): void {
     this.isLoading = true;
     this.nameService.saveName({
       languageId: this.languageId,
@@ -127,24 +135,29 @@ export class NameFormComponent implements OnInit {
       lastName: this.lastName,
       patronymic: this.patronymic,
     }, {
-      onSuccess: () => this.loadNames(),
+      onSuccess: () => this.loadNames(onSuccess),
       onFinal: () => this.isLoading = false,
     });
   }
 
-  deleteName(): void {
+  deleteName(onSuccess?: () => void): void {
     this.isLoading = true;
     this.nameService.deleteName(this.languageId, {
-      onSuccess: () => this.loadNames(),
+      onSuccess: () => this.loadNames(onSuccess),
       onFinal: () => this.isLoading = false,
     });
+  }
+
+  showSuccessAlert = () => {
+    this.isSuccessAlertShown = true;
+    setTimeout(() => this.isSuccessAlertShown = false, 5000);
   }
 
   handleSubmitButtonClick(): void {
     if (this.isNameFormEmpty()) {
-      this.deleteName();
+      this.deleteName(this.showSuccessAlert);
     } else {
-      this.saveName();
+      this.saveName(this.showSuccessAlert);
     }
   }
 

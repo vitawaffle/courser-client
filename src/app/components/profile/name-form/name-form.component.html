@@ -28,4 +28,7 @@
         <input formControlName="patronymic" type="text" id="patronymic" class="form-control">
     </div>
     <app-submit-button [isLoading]="isLoading">Save</app-submit-button>
+    <div *ngIf="isSuccessAlertShown" class="alert alert-success mt-3" role="alert">
+        Saved
+    </div>
 </form>
