@@ -1,20 +1,16 @@
-<div *ngIf="isShown" class="col">
-    <div class="card">
-        <div class="card-body">
-            <p class="card-text">
-                You have not verified your email address
-            </p>
-            <button type="button"
-                    class="btn btn-outline-primary"
-                    [disabled]="isResendButtonDisabled"
-                    (click)="resendConfirmationEmail()">
-                <span *ngIf="isLoading"
-                      class="spinner-grow spinner-grow-sm"
-                      role="status"
-                      aria-hidden="true"></span>
-                Resend
-                <span *ngIf="timeLeft">({{timeLeft}} s)</span>
-            </button>
-        </div>
-    </div>
-</div>
+<app-profile-tab-card *ngIf="isShown">
+    <p class="card-text">
+        You have not verified your email address
+    </p>
+    <button type="button"
+            class="btn btn-outline-primary"
+            [disabled]="isResendButtonDisabled"
+            (click)="resendConfirmationEmail()">
+        <span *ngIf="isLoading"
+              class="spinner-grow spinner-grow-sm"
+              role="status"
+              aria-hidden="true"></span>
+        Resend
+        <span *ngIf="timeLeft">({{timeLeft}} s)</span>
+    </button>
+</app-profile-tab-card>

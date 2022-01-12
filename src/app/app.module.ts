@@ -27,6 +27,8 @@ import { NameFormComponent } from './components/profile/name-form/name-form.comp
 import { ErrorComponent } from './components/errors/error/error.component';
 import { ErrorLayoutComponent } from './components/errors/error-layout/error-layout.component';
 import { PageNotFoundErrorComponent } from './components/errors/page-not-found-error/page-not-found-error.component';
+import { ProfileTabComponent } from './components/profile/profile-tab/profile-tab.component';
+import { ProfileTabCardComponent } from './components/profile/profile-tab-card/profile-tab-card.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { PageNotFoundErrorComponent } from './components/errors/page-not-found-e
     ErrorComponent,
     ErrorLayoutComponent,
     PageNotFoundErrorComponent,
+    ProfileTabComponent,
+    ProfileTabCardComponent,
   ],
   imports: [
     BrowserModule,
