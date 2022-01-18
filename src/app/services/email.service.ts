@@ -17,7 +17,7 @@ export class EmailService {
 
   getCanBeResend(): Observable<Date | undefined> {
     return this.httpClient.get<Date>('/email-confirmation/can-be-resend')
-                          .pipe(map(response => response ? new Date(response) : undefined));
+      .pipe(map(response => response ? new Date(response) : undefined));
   }
 
   resendConfirmationEmail({

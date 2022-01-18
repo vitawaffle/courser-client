@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { AvatarService } from 'src/app/services/avatar.service';
 
 @Component({
@@ -24,9 +25,10 @@ export class AvatarFormComponent {
 
   handleFormSubmit(): void {
     this.isLoading = true;
-    this.avatarService.storeAvatar(this.avatarFile, {
-      onFinal: () => this.isLoading = false,
-    });
+
+    this.avatarService.storeAvatar(this.avatarFile)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(() => {});
   }
 
 }

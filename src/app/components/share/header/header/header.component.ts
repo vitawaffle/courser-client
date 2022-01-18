@@ -16,7 +16,7 @@ export class HeaderComponent {
   }
 
   logout(): void {
-    this.authService.logout({ onSuccess: () => this.router.navigateByUrl("/home") });
+    this.authService.logout().subscribe(() => this.router.navigateByUrl("/home"));
   }
 
 }

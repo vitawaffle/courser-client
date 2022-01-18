@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, finalize } from 'rxjs/operators';
-import { HandlingArguments } from './handling-arguments';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { UserEntity } from '../entities/user.entity';
 import { CredentialsDTO } from '../dto/credentials.dto';
 import { ChangePasswordDTO } from '../dto/change-password.dto';
@@ -19,135 +19,41 @@ export class AuthService {
     return !!this.user;
   }
 
-  checkAuth({
-    onSuccess,
-    onFinal,
-    onError,
-    onUnauthorized,
-  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onUnauthorized'> = {}): void {
-    this.httpClient.get<UserEntity>('/users/me').pipe(catchError((error: any) => {
+  checkAuth(): Observable<UserEntity> {
+    return this.httpClient.get<UserEntity>('/users/me').pipe(catchError((error: any) => {
       switch (error.status) {
         case 401:
           this.logout();
-          if (onUnauthorized) {
-            onUnauthorized();
-          }
           break;
       }
 
-      if (onError) {
-        onError(error);
-      }
       throw error;
-    }), finalize(() => {
-      if (onFinal) {
-        onFinal();
-      }
-    })).subscribe((user: UserEntity) => {
-      this.user = user;
-
-      if (onSuccess) {
-        onSuccess();
-      }
-    });
+    }), tap(user => this.user = user));
   }
 
-  logout({ onSuccess, }: Pick<HandlingArguments, 'onSuccess'> = {}): void {
+  logout(): Observable<null> {
     this.user = undefined;
     localStorage.removeItem('authToken');
 
-    if (onSuccess) {
-      onSuccess();
-    }
+    return of();
   }
 
-  login(credentials: CredentialsDTO, {
-    onSuccess,
-    onFinal,
-    onError,
-    onUnauthorized,
-  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onUnauthorized'> = {}): void {
-    this.httpClient.post('/auth/login', credentials, {
-      responseType: 'text'
-    }).pipe(catchError((error: any) => {
-      switch (error.status) {
-        case 401:
-          if (onUnauthorized) {
-            onUnauthorized();
-          }
-          break;
-      }
-
-      if (onError) {
-        onError(error);
-      }
-      throw error;
-    }), finalize(() => {
-      if (onFinal) {
-        onFinal();
-      }
-    })).subscribe((authToken: string) => {
-      localStorage.setItem('authToken', authToken);
-
-      if (onSuccess) {
-        onSuccess();
-      }
-    });
+  private authenticate(credentials: CredentialsDTO, url: string): Observable<string> {
+    return this.httpClient.post(url, credentials, {
+      responseType: 'text',
+    }).pipe(tap((authToken: string) => localStorage.setItem('authToken', authToken)));
   }
 
-  signin(credentials: CredentialsDTO, {
-    onSuccess,
-    onFinal,
-    onError,
-  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError'> = {}): void {
-    this.httpClient.post('/auth/signin', credentials, {
-      responseType: 'text'
-    }).pipe(catchError((error: any) => {
-      if (onError) {
-        onError();
-      }
-      throw error;
-    }), finalize(() => {
-      if (onFinal) {
-        onFinal();
-      }
-    })).subscribe((authToken: string) => {
-      localStorage.setItem('authToken', authToken);
-
-      if (onSuccess) {
-        onSuccess();
-      }
-    });
+  login(credentials: CredentialsDTO): Observable<string> {
+    return this.authenticate(credentials, '/auth/login');
   }
 
-  changePassword(changePasswordDTO: ChangePasswordDTO, {
-    onSuccess,
-    onFinal,
-    onError,
-    onUnauthorized,
-  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onUnauthorized'> = {}): void {
-    this.httpClient.post('/auth/change-password', changePasswordDTO).pipe(catchError((error: any) => {
-      switch (error.status) {
-        case 401:
-          if (onUnauthorized) {
-            onUnauthorized();
-          }
-          break;
-      }
+  signin(credentials: CredentialsDTO): Observable<string> {
+    return this.authenticate(credentials, '/auth/signin');
+  }
 
-      if (onError) {
-        onError(error);
-      }
-      throw error;
-    }), finalize(() => {
-      if (onFinal) {
-        onFinal();
-      }
-    })).subscribe((response: any) => {
-      if (onSuccess) {
-        onSuccess();
-      }
-    });
+  changePassword(changePasswordDTO: ChangePasswordDTO): Observable<any> {
+    return this.httpClient.post('/auth/change-password', changePasswordDTO);
   }
 
 }

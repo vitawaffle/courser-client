@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { PasswordValidator } from '../../../validators/password.validator';
 import { UniqueEmailValidator } from '../../../validators/unique-email.validator';
 import { EqualsValidator } from 'src/app/validators/equals.validator';
@@ -18,7 +19,8 @@ export class SigninFormComponent {
 
   passwordControl: AbstractControl = this.formBuilder.control(
     '',
-    [Validators.required, this.passwordValidator.getValidator()]
+    [Validators.required],
+    [this.passwordValidator.getValidator()]
   );
 
   signinForm: FormGroup = this.formBuilder.group({
@@ -74,12 +76,10 @@ export class SigninFormComponent {
 
   signin(): void {
     this.isLoading = true;
-    this.authService.signin(this.signinForm.value, {
-      onSuccess: () => this.authService.checkAuth({
-        onSuccess: () => this.router.navigateByUrl('/home')
-      }),
-      onFinal: () => this.isLoading = false,
-    });
+
+    this.authService.signin(this.signinForm.value)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe(() => this.authService.checkAuth().subscribe(() => this.router.navigateByUrl('/home')));
   }
 
 }

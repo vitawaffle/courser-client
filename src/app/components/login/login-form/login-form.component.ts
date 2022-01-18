@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormUtil } from '../../../utils/form.util';
-import { AuthService } from '../../../services/auth.service';
+import { catchError, finalize } from 'rxjs/operators';
+import { FormUtil } from 'src/app/utils/form.util';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -50,13 +51,17 @@ export class LoginFormComponent {
   login(): void {
     this.isInvalidCredentials = false;
     this.isLoading = true;
-    this.authService.login(this.loginForm.value, {
-      onSuccess: () => this.authService.checkAuth({
-        onSuccess: () => this.router.navigateByUrl('/home')
+
+    this.authService.login(this.loginForm.value).pipe(
+      catchError((error: any) => {
+        if (error.status === 401) {
+          this.isInvalidCredentials = true;
+        }
+
+        throw error;
       }),
-      onUnauthorized: () => this.isInvalidCredentials = true,
-      onFinal: () => this.isLoading = false
-    });
+      finalize(() => this.isLoading = false)
+    ).subscribe(() => this.authService.checkAuth().subscribe(() => this.router.navigateByUrl('/home')));
   }
 
 }

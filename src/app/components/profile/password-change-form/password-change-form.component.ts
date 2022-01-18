@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { catchError, finalize } from 'rxjs/operators';
 import { PasswordValidator } from 'src/app/validators/password.validator';
 import { EqualsValidator } from 'src/app/validators/equals.validator';
 import { FormUtil } from 'src/app/utils/form.util';
@@ -20,7 +21,8 @@ export class PasswordChangeFormComponent {
 
   newPasswordControl: AbstractControl = this.formBuilder.control(
     '',
-    [Validators.required, this.passwordValidator.getValidator()]
+    [Validators.required],
+    [this.passwordValidator.getValidator()]
   );
 
   passwordChangeForm: FormGroup = this.formBuilder.group({
@@ -74,16 +76,21 @@ export class PasswordChangeFormComponent {
   changePassword(): void {
     this.isLoading = true;
     this.isInvalidCredentials = false;
+
     this.authService.changePassword({
       oldPassword: this.oldPasswordControl.value,
-      newPassword: this.newPasswordControl.value
-    }, {
-      onSuccess: () => {
-        this.isSuccessAlertShown = true;
-        setTimeout(() => this.isSuccessAlertShown = false, 5000);
-      },
-      onUnauthorized: () => this.isInvalidCredentials = true,
-      onFinal: () => this.isLoading = false,
+      newPassword: this.newPasswordControl.value,
+    }).pipe(catchError((error: any) => {
+      if (error.status === 400) {
+        this.isInvalidCredentials = true;
+      }
+
+      throw error;
+    }), finalize(() => this.isLoading = false)).subscribe(() => {
+      this.isSuccessAlertShown = true;
+      setTimeout(() => this.isSuccessAlertShown = false, 5000);
+
+      this.passwordChangeForm.reset();
     });
   }
 
