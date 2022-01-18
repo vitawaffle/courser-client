@@ -1,0 +1,13 @@
+<form (ngSubmit)="handleFormSubmit()">
+    <div class="mb-3">
+        <label for="avatarFile" class="form-label">Choose your avatar file from filesystem</label>
+        <input type="file"
+               id="avatarFile"
+               class="form-control"
+               accept="image/png, image/gif, image/jpeg"
+               (change)="handleAvatarFileChange($event)">
+    </div>
+    <app-submit-button [isLoading]="isLoading" [isDisabled]="isSubmitDisabled">
+        Upload
+    </app-submit-button>
+</form>

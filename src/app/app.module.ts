@@ -29,6 +29,10 @@ import { ErrorLayoutComponent } from './components/errors/error-layout/error-lay
 import { PageNotFoundErrorComponent } from './components/errors/page-not-found-error/page-not-found-error.component';
 import { ProfileTabComponent } from './components/profile/profile-tab/profile-tab.component';
 import { ProfileTabCardComponent } from './components/profile/profile-tab-card/profile-tab-card.component';
+import { AvatarFormComponent } from './components/profile/avatar-form/avatar-form.component';
+import { AvatarTabCardComponent } from './components/profile/avatar-tab-card/avatar-tab-card.component';
+import { AvatarTabCardImageComponent } from './components/profile/avatar-tab-card-image/avatar-tab-card-image.component';
+import { AuthPipe } from './pipes/auth.pipe';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,10 @@ import { ProfileTabCardComponent } from './components/profile/profile-tab-card/p
     PageNotFoundErrorComponent,
     ProfileTabComponent,
     ProfileTabCardComponent,
+    AvatarFormComponent,
+    AvatarTabCardComponent,
+    AvatarTabCardImageComponent,
+    AuthPipe,
   ],
   imports: [
     BrowserModule,
