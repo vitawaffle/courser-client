@@ -31,11 +31,11 @@ export class AuthService {
     }), tap(user => this.user = user));
   }
 
-  logout(): Observable<null> {
+  logout(): Observable<any> {
     this.user = undefined;
     localStorage.removeItem('authToken');
 
-    return of();
+    return of({});
   }
 
   private authenticate(credentials: CredentialsDTO, url: string): Observable<string> {

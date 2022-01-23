@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PasswordRulesDTO } from '../dto/password-rules.dto';
 import { PasswordRule } from '../validators/password/rules/password-rule';
@@ -14,10 +13,18 @@ import { LengthPasswordRule } from '../validators/password/rules/length.password
 })
 export class ConfigurationService {
 
-  constructor(private httpClient: HttpClient) { }
+  private _activePasswordRules: PasswordRule[] = [];
 
-  get activePasswordRules(): Observable<PasswordRule[]> {
-    return this.httpClient.get<PasswordRulesDTO>('/configuration/password-rules')
+  constructor(private httpClient: HttpClient) {
+    this.loadPasswordRules();
+  }
+
+  get activePasswordRules(): PasswordRule[] {
+    return this._activePasswordRules;
+  }
+
+  loadPasswordRules(): void {
+    this.httpClient.get<PasswordRulesDTO>('/configuration/password-rules')
       .pipe(map((rules: PasswordRulesDTO) => {
         const activePasswordRules: PasswordRule[] = [];
         if (rules.HasBigLetterPasswordRule === 'true') {
@@ -33,7 +40,7 @@ export class ConfigurationService {
           activePasswordRules.push(new LengthPasswordRule(parseInt(rules.LengthPasswordRule)));
         }
         return activePasswordRules;
-      }));
+      })).subscribe((rules: PasswordRule[]) => this._activePasswordRules = rules);
   }
 
 }

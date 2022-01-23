@@ -21,19 +21,18 @@ export class PasswordChangeFormComponent {
 
   newPasswordControl: AbstractControl = this.formBuilder.control(
     '',
-    [Validators.required],
-    [this.passwordValidator.getValidator()]
+    [Validators.required, this.passwordValidator.getValidator()],
   );
 
   passwordChangeForm: FormGroup = this.formBuilder.group({
     oldPassword: [
       '',
-      [Validators.required]
+      [Validators.required],
     ],
     newPassword: this.newPasswordControl,
     confirmedPassword: [
       '',
-      [Validators.required, this.equalsValidator.getValidator(this.newPasswordControl, 'passwordMismatch')]
+      [Validators.required, this.equalsValidator.getValidator(this.newPasswordControl, 'passwordMismatch')],
     ],
   });
 

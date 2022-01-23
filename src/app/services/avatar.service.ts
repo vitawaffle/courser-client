@@ -16,4 +16,8 @@ export class AvatarService {
     return this.httpClient.post('/avatars/me', formData);
   }
 
+  deleteCurrentAvatar(): Observable<any> {
+    return this.httpClient.delete('/avatars/me/current');
+  }
+
 }

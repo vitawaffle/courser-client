@@ -19,8 +19,7 @@ export class SigninFormComponent {
 
   passwordControl: AbstractControl = this.formBuilder.control(
     '',
-    [Validators.required],
-    [this.passwordValidator.getValidator()]
+    [Validators.required, this.passwordValidator.getValidator()],
   );
 
   signinForm: FormGroup = this.formBuilder.group({
