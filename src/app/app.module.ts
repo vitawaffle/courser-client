@@ -3,7 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { httpInterceptorProviders } from './http-interceptor-providers';
+
+import { AuthPipe } from './pipes/auth.pipe';
 
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/share/layout/layout.component';
@@ -32,7 +35,6 @@ import { ProfileTabCardComponent } from './components/profile/profile-tab-card/p
 import { AvatarFormComponent } from './components/profile/avatar-form/avatar-form.component';
 import { AvatarTabCardComponent } from './components/profile/avatar-tab-card/avatar-tab-card.component';
 import { AvatarTabCardImageComponent } from './components/profile/avatar-tab-card-image/avatar-tab-card-image.component';
-import { AuthPipe } from './pipes/auth.pipe';
 import { DeleteCurrentAvatarButtonComponent } from './components/profile/delete-current-avatar-button/delete-current-avatar-button.component';
 
 @NgModule({

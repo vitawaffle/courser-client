@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileLayoutComponent, children: [
     { path: 'security', component: ProfileSecurityComponent },
     { path: 'main', component: ProfileMainComponent },
-    { path: '', redirectTo: 'main', pathMatch: 'full' }
+    { path: '', redirectTo: 'main', pathMatch: 'full' },
   ] },
   { path: 'signin', component: SigninLayoutComponent },
   { path: 'login', component: LoginLayoutComponent },
@@ -22,9 +22,9 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'error', component: ErrorLayoutComponent, children: [
     { path: '404', component: PageNotFoundErrorComponent },
-    { path: '', redirectTo: '404', pathMatch: 'full' }
+    { path: '', redirectTo: '404', pathMatch: 'full' },
   ] },
-  { path: '**', redirectTo: '/error/404', pathMatch: 'full' }
+  { path: '**', redirectTo: '/error/404', pathMatch: 'full' },
 ];
 
 const config: ExtraOptions = { };

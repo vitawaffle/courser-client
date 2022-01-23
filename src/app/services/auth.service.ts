@@ -21,10 +21,8 @@ export class AuthService {
 
   checkAuth(): Observable<UserEntity> {
     return this.httpClient.get<UserEntity>('/users/me').pipe(catchError((error: any) => {
-      switch (error.status) {
-        case 401:
+      if (error.status === 401) {
           this.logout();
-          break;
       }
 
       throw error;

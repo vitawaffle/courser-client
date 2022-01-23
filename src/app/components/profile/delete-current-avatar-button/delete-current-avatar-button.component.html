@@ -1,3 +1,10 @@
-<button type="button" class="btn btn-outline-primary btn-lg" (click)="handleClick()">
+<button type="button"
+        class="btn btn-outline-primary btn-lg"
+        (click)="handleClick()"
+        [disabled]="isLoading || isDisabled">
+    <span *ngIf="isLoading"
+          class="spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="true"></span>
     Delete
 </button>

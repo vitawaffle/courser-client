@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { AvatarService } from 'src/app/services/avatar.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-delete-current-avatar-button',
@@ -11,7 +12,11 @@ export class DeleteCurrentAvatarButtonComponent {
 
   isLoading: boolean = false;
 
-  constructor(private avatarService: AvatarService) { }
+  constructor(private avatarService: AvatarService, private authService: AuthService) { }
+
+  get isDisabled(): boolean {
+    return false;
+  }
 
   handleClick(): void {
     this.isLoading = true;

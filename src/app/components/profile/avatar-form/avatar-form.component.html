@@ -7,8 +7,12 @@
                accept="image/png, image/gif, image/jpeg"
                (change)="handleAvatarFileChange($event)">
     </div>
-    <app-submit-button [isLoading]="isLoading" [isDisabled]="isSubmitDisabled">
-        Upload
-    </app-submit-button>
-    <app-delete-current-avatar-button></app-delete-current-avatar-button>
+    <div class="d-flex">
+        <app-submit-button [isLoading]="isLoading"
+                           [isDisabled]="isSubmitDisabled"
+                           class="me-2">
+            Upload
+        </app-submit-button>
+        <app-delete-current-avatar-button></app-delete-current-avatar-button>
+    </div>
 </form>

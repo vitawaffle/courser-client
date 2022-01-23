@@ -8,11 +8,10 @@ import { Validator } from './validator';
 export class EqualsValidator implements Validator {
 
     getValidator(equalsTo: AbstractControl, errorName: string = 'valueMismatch'): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
-            return control.value !== equalsTo.value
+        return (control: AbstractControl): ValidationErrors | null =>
+            control.value !== equalsTo.value
                 ? { [errorName]: true }
                 : null;
-        }
     }
 
 }
