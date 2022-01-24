@@ -22,4 +22,8 @@ export class AvatarGalleryComponent implements OnInit {
     this.loadAvatars();
   }
 
+  handleDeleteEvent(avatar: AvatarDTO) {
+    this.avatars = this.avatars.filter(item => item.id !== avatar.id);
+  }
+
 }

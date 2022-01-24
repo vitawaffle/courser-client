@@ -1,7 +1,14 @@
 <div class="card">
     <img [src]="src" class="card-img-top">
     <div class="card-body">
-        <button type="button" class="btn btn-outline-primary" (click)="handleDeleteButtonClick()">
+        <button type="button"
+                class="btn btn-outline-primary"
+                (click)="handleDeleteButtonClick()"
+                [disabled]="isDeleteLoading">
+            <span *ngIf="isDeleteLoading"
+                  class="spinner-grow spinner-grow-sm"
+                  role="status"
+                  aria-hidden="true"></span>
             Delete
         </button>
     </div>

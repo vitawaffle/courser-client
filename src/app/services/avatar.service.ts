@@ -25,4 +25,8 @@ export class AvatarService {
     return this.httpClient.delete('/avatars/me/current');
   }
 
+  deleteAvatarById(id: number): Observable<any> {
+    return this.httpClient.delete(`/avatars/me/${id}`);
+  }
+
 }

@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { AvatarDTO } from 'src/app/dto/avatar.dto';
 import { SERVER_ADDRESS } from 'src/app/config/app.config';
 import { AvatarService } from 'src/app/services/avatar.service';
@@ -10,12 +11,17 @@ import { AvatarService } from 'src/app/services/avatar.service';
 })
 export class AvatarGalleryImageComponent {
 
+  isDeleteLoading = false;
+
   @Input()
   avatar: AvatarDTO = {
     file: {
       name: ''
     }
   };
+
+  @Output()
+  deleted = new EventEmitter<AvatarDTO>();
 
   constructor(private avatarService: AvatarService) { }
 
@@ -24,6 +30,13 @@ export class AvatarGalleryImageComponent {
   }
 
   handleDeleteButtonClick() {
+    this.isDeleteLoading = true;
+    this.avatarService.deleteAvatarById(this.avatar.id!!)
+      .pipe(finalize(() => {
+        this.isDeleteLoading = false;
+        this.deleted.emit(this.avatar);
+      }))
+      .subscribe(() => {});
   }
 
 }
