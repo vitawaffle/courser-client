@@ -9,8 +9,10 @@ import { SigninLayoutComponent } from './components/signin/signin-layout/signin-
 import { ProfileLayoutComponent } from './components/profile/profile-layout/profile-layout.component';
 import { ProfileMainComponent } from './components/profile/profile-main/profile-main.component';
 import { ProfileSecurityComponent } from './components/profile/profile-security/profile-security.component';
+import { AvatarsLayoutComponent } from './components/profile/avatars-layout/avatars-layout.component';
 
 const routes: Routes = [
+  { path: 'avatars', component: AvatarsLayoutComponent },
   { path: 'profile', component: ProfileLayoutComponent, children: [
     { path: 'security', component: ProfileSecurityComponent },
     { path: 'main', component: ProfileMainComponent },

@@ -36,6 +36,9 @@ import { AvatarFormComponent } from './components/profile/avatar-form/avatar-for
 import { AvatarTabCardComponent } from './components/profile/avatar-tab-card/avatar-tab-card.component';
 import { AvatarTabCardImageComponent } from './components/profile/avatar-tab-card-image/avatar-tab-card-image.component';
 import { DeleteCurrentAvatarButtonComponent } from './components/profile/delete-current-avatar-button/delete-current-avatar-button.component';
+import { AvatarsLayoutComponent } from './components/profile/avatars-layout/avatars-layout.component';
+import { AvatarGalleryComponent } from './components/profile/avatar-gallery/avatar-gallery.component';
+import { AvatarGalleryImageComponent } from './components/profile/avatar-gallery-image/avatar-gallery-image.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import { DeleteCurrentAvatarButtonComponent } from './components/profile/delete-
     AvatarTabCardImageComponent,
     AuthPipe,
     DeleteCurrentAvatarButtonComponent,
+    AvatarsLayoutComponent,
+    AvatarGalleryComponent,
+    AvatarGalleryImageComponent,
   ],
   imports: [
     BrowserModule,
