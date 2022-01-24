@@ -9,17 +9,17 @@ import { AvatarService } from 'src/app/services/avatar.service';
 })
 export class AvatarFormComponent {
 
-  avatarFile: File = new File([], '');
+  avatarFile = new File([], '');
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(private avatarService: AvatarService) { }
 
-  get isSubmitDisabled(): boolean {
+  get isSubmitDisabled() {
     return this.avatarFile.name === '';
   }
 
-  handleAvatarFileChange(event: any): void {
+  handleAvatarFileChange(event: any) {
     this.avatarFile = event.target.files[0];
   }
 

@@ -19,11 +19,11 @@ export class AvatarGalleryImageComponent {
 
   constructor(private avatarService: AvatarService) { }
 
-  get src(): string {
+  get src() {
     return SERVER_ADDRESS + '/avatars/' + this.avatar.id;
   }
 
-  handleDeleteButtonClick(): void {
+  handleDeleteButtonClick() {
   }
 
 }

@@ -13,12 +13,12 @@ export class AvatarGalleryComponent implements OnInit {
 
   constructor(private avatarService: AvatarService) { }
 
-  loadAvatars(): void {
+  loadAvatars() {
     this.avatarService.getAllAvatars()
-      .subscribe((avatars: AvatarDTO[]) => this.avatars = avatars);
+      .subscribe(avatars => this.avatars = avatars);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadAvatars();
   }
 

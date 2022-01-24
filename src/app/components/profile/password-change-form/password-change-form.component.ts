@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { catchError, finalize } from 'rxjs/operators';
 import { PasswordValidator } from 'src/app/validators/password.validator';
 import { EqualsValidator } from 'src/app/validators/equals.validator';
@@ -13,18 +13,21 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class PasswordChangeFormComponent {
 
-  isLoading: boolean = false;
+  isLoading = false;
 
-  isInvalidCredentials: boolean = false;
+  isInvalidCredentials = false;
 
-  isSuccessAlertShown: boolean = false;
+  isSuccessAlertShown = false;
 
   newPasswordControl: AbstractControl = this.formBuilder.control(
     '',
-    [Validators.required, this.passwordValidator.getValidator()],
+    [
+      Validators.required,
+      this.passwordValidator.getValidator(),
+    ],
   );
 
-  passwordChangeForm: FormGroup = this.formBuilder.group({
+  passwordChangeForm = this.formBuilder.group({
     oldPassword: [
       '',
       [Validators.required],
@@ -32,7 +35,10 @@ export class PasswordChangeFormComponent {
     newPassword: this.newPasswordControl,
     confirmedPassword: [
       '',
-      [Validators.required, this.equalsValidator.getValidator(this.newPasswordControl, 'passwordMismatch')],
+      [
+        Validators.required,
+        this.equalsValidator.getValidator(this.newPasswordControl, 'passwordMismatch'),
+      ],
     ],
   });
 
@@ -52,34 +58,34 @@ export class PasswordChangeFormComponent {
     return this.passwordChangeForm.controls.confirmedPassword;
   }
 
-  get isOldPasswordInvalid(): boolean {
+  get isOldPasswordInvalid() {
     return this.isInvalid(this.oldPasswordControl);
   }
 
-  get isNewPasswordInvalid(): boolean {
+  get isNewPasswordInvalid() {
     return this.isInvalid(this.newPasswordControl);
   }
 
-  get isConfirmedPasswordInvalid(): boolean {
+  get isConfirmedPasswordInvalid() {
     return this.isInvalid(this.confirmedPasswordControl);
   }
 
-  get isPasswordChangeFormInvalid(): boolean {
+  get isPasswordChangeFormInvalid() {
     return this.passwordChangeForm.invalid;
   }
 
-  isInvalid(control: AbstractControl): boolean {
+  isInvalid(control: AbstractControl) {
     return this.formUtil.isControlInvalid(control);
   }
 
-  changePassword(): void {
+  changePassword() {
     this.isLoading = true;
     this.isInvalidCredentials = false;
 
     this.authService.changePassword({
       oldPassword: this.oldPasswordControl.value,
       newPassword: this.newPasswordControl.value,
-    }).pipe(catchError((error: any) => {
+    }).pipe(catchError(error => {
       if (error.status === 400) {
         this.isInvalidCredentials = true;
       }

@@ -11,7 +11,7 @@ export class AvatarTabCardImageComponent {
 
   isCapShown = false;
 
-  handleImageLoadError(): void {
+  handleImageLoadError() {
     this.isCapShown = true;
   }
 

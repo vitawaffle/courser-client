@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs/operators';
 import { FormUtil } from 'src/app/utils/form.util';
@@ -12,11 +12,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginFormComponent {
 
-  isLoading: boolean = false;
+  isLoading = false;
 
-  isInvalidCredentials: boolean = false;
+  isInvalidCredentials = false;
 
-  loginForm: FormGroup = this.formBuilder.group({
+  loginForm = this.formBuilder.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
@@ -36,24 +36,24 @@ export class LoginFormComponent {
     return this.loginForm.controls.password;
   }
 
-  get isEmailInvalid(): boolean {
+  get isEmailInvalid() {
     return this.formUtil.isControlInvalid(this.emailControl);
   }
 
-  get isPasswordInvalid(): boolean {
+  get isPasswordInvalid() {
     return this.formUtil.isControlInvalid(this.passwordControl);
   }
 
-  get isLoginFormInvalid(): boolean {
+  get isLoginFormInvalid() {
     return this.loginForm.invalid;
   }
 
-  login(): void {
+  login() {
     this.isInvalidCredentials = false;
     this.isLoading = true;
 
     this.authService.login(this.loginForm.value).pipe(
-      catchError((error: any) => {
+      catchError(error => {
         if (error.status === 401) {
           this.isInvalidCredentials = true;
         }

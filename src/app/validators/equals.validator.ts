@@ -7,7 +7,7 @@ import { Validator } from './validator';
 })
 export class EqualsValidator implements Validator {
 
-    getValidator(equalsTo: AbstractControl, errorName: string = 'valueMismatch'): ValidatorFn {
+    getValidator(equalsTo: AbstractControl, errorName = 'valueMismatch'): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null =>
             control.value !== equalsTo.value
                 ? { [errorName]: true }

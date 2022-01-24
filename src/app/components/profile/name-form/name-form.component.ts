@@ -13,24 +13,24 @@ import { NameDTO } from 'src/app/dto/name.dto';
 })
 export class NameFormComponent implements OnInit {
 
-  isLanguagesLoading: boolean = false;
+  isLanguagesLoading = false;
 
   languages: LanguageEntity[] = [];
 
-  isNamesLoading: boolean = false;
+  isNamesLoading = false;
 
   names: NameDTO[] = [];
 
-  nameForm: FormGroup = this.formBuilder.group({
+  nameForm = this.formBuilder.group({
     languageId: [0],
     firstName: [''],
     lastName: [''],
     patronymic: [''],
   });
 
-  isLoading: boolean = false;
+  isLoading = false;
 
-  isSuccessAlertShown: boolean = false;
+  isSuccessAlertShown = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +38,7 @@ export class NameFormComponent implements OnInit {
     private nameService: NameService,
   ) { }
 
-  get isDataLoading(): boolean {
+  get isDataLoading() {
     return this.isLanguagesLoading && this.isNamesLoading;
   }
 
@@ -58,23 +58,23 @@ export class NameFormComponent implements OnInit {
     return this.nameForm.controls.patronymic;
   }
 
-  get languageId(): number {
+  get languageId() {
     return parseInt(this.languageIdControl.value);
   }
 
-  get firstName(): string {
+  get firstName() {
     return this.firstNameControl.value;
   }
 
-  get lastName(): string {
+  get lastName() {
     return this.lastNameControl.value;
   }
 
-  get patronymic(): string {
+  get patronymic() {
     return this.patronymicControl.value;
   }
 
-  updateNameValues(): void {
+  updateNameValues() {
     const name = this.names.find(name => name.languageId == this.languageId);
     this.nameForm.patchValue({
       firstName: name ? name.firstName : '',
@@ -83,7 +83,7 @@ export class NameFormComponent implements OnInit {
     });
   }
 
-  loadLanguages(): void {
+  loadLanguages() {
     this.isLanguagesLoading = true;
     this.languageService.getAllLanguages()
       .pipe(finalize(() => {
@@ -95,7 +95,7 @@ export class NameFormComponent implements OnInit {
       })).subscribe(languages => this.languages = languages);
   }
 
-  loadNames(onSuccess?: () => void): void {
+  loadNames(onSuccess?: () => void) {
     this.isNamesLoading = true;
     this.nameService.getAllNames()
       .pipe(finalize(() => {
@@ -110,7 +110,7 @@ export class NameFormComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadLanguages();
     this.loadNames();
   }
@@ -119,15 +119,15 @@ export class NameFormComponent implements OnInit {
     return this.languageService.getLanguageNameByCode(code);
   }
 
-  handleLanguageIdChange(): void {
+  handleLanguageIdChange() {
     this.updateNameValues();
   }
 
-  isNameFormEmpty(): boolean {
+  isNameFormEmpty() {
     return this.firstName === '' && this.lastName === '' && this.patronymic === '';
   }
 
-  saveName(onSuccess?: () => void): void {
+  saveName(onSuccess?: () => void) {
     this.isLoading = true;
     this.nameService.saveName({
       languageId: this.languageId,
@@ -140,7 +140,7 @@ export class NameFormComponent implements OnInit {
     });
   }
 
-  deleteName(onSuccess?: () => void): void {
+  deleteName(onSuccess?: () => void) {
     this.isLoading = true;
     this.nameService.deleteName(this.languageId, {
       onSuccess: () => this.loadNames(onSuccess),
@@ -153,7 +153,7 @@ export class NameFormComponent implements OnInit {
     setTimeout(() => this.isSuccessAlertShown = false, 5000);
   }
 
-  handleSubmitButtonClick(): void {
+  handleSubmitButtonClick() {
     if (this.isNameFormEmpty()) {
       this.deleteName(this.showSuccessAlert);
     } else {

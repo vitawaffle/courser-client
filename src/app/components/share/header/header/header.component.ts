@@ -11,11 +11,11 @@ export class HeaderComponent {
 
   constructor(private router: Router, private authService: AuthService) { }
 
-  get isAuthenticated(): boolean {
+  get isAuthenticated() {
     return this.authService.isAuthenticated;
   }
 
-  logout(): void {
+  logout() {
     this.authService.logout().subscribe(() => this.router.navigateByUrl("/home"));
   }
 

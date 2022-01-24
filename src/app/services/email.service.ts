@@ -20,12 +20,15 @@ export class EmailService {
       .pipe(map(response => response ? new Date(response) : undefined));
   }
 
+  /*
+   * TODO Need to refactor
+   */
   resendConfirmationEmail({
     onSuccess,
     onFinal,
     onError,
-  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError'> = {}): void {
-    this.httpClient.post('/email-confirmation/resend', null).pipe(catchError((error: any) => {
+  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError'> = {}) {
+    this.httpClient.post('/email-confirmation/resend', null).pipe(catchError(error => {
       if (onError) {
         onError(error);
       }
@@ -35,7 +38,7 @@ export class EmailService {
       if (onFinal) {
         onFinal();
       }
-    })).subscribe((response: any) => {
+    })).subscribe(() => {
       if (onSuccess) {
         onSuccess();
       }

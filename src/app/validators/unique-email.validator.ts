@@ -12,7 +12,7 @@ export class UniqueEmailValidator implements Validator {
 
     constructor(private emailService: EmailService) { }
 
-    getValidator(errorName: string = 'unique'): AsyncValidatorFn {
+    getValidator(errorName = 'unique'): AsyncValidatorFn {
         return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> =>
             this.emailService.exists(control.value).pipe(
                 map(isExists => (isExists ? { [errorName]: true } : null)),

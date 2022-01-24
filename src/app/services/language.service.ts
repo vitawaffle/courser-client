@@ -14,7 +14,7 @@ export class LanguageService {
     return this.httpClient.get<LanguageEntity[]>('/languages');
   }
 
-  getLanguageNameByCode(code: string): string {
+  getLanguageNameByCode(code: string) {
     let name: string;
     switch (code) {
       case 'en':

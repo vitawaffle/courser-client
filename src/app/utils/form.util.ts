@@ -6,7 +6,7 @@ import { AbstractControl } from '@angular/forms';
 })
 export class FormUtil {
 
-    isControlInvalid(control: AbstractControl): boolean {
+    isControlInvalid(control: AbstractControl) {
         return (control.dirty || control.touched) && control.invalid;
     }
 

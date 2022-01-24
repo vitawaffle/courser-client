@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, ExtraOptions } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { ErrorLayoutComponent } from './components/errors/error-layout/error-layout.component';
 import { PageNotFoundErrorComponent } from './components/errors/page-not-found-error/page-not-found-error.component';
@@ -29,10 +29,8 @@ const routes: Routes = [
   { path: '**', redirectTo: '/error/404', pathMatch: 'full' },
 ];
 
-const config: ExtraOptions = { };
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

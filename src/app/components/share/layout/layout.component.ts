@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
 export class LayoutComponent {
 
   @Input()
-  isCentered: boolean = false;
+  isCentered = false;
 
 }

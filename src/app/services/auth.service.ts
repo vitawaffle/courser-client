@@ -15,12 +15,12 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
 
-  get isAuthenticated(): boolean {
+  get isAuthenticated() {
     return !!this.user;
   }
 
   checkAuth(): Observable<UserEntity> {
-    return this.httpClient.get<UserEntity>('/users/me').pipe(catchError((error: any) => {
+    return this.httpClient.get<UserEntity>('/users/me').pipe(catchError(error => {
       if (error.status === 401) {
           this.logout();
       }
@@ -39,7 +39,7 @@ export class AuthService {
   private authenticate(credentials: CredentialsDTO, url: string): Observable<string> {
     return this.httpClient.post(url, credentials, {
       responseType: 'text',
-    }).pipe(tap((authToken: string) => localStorage.setItem('authToken', authToken)));
+    }).pipe(tap(authToken => localStorage.setItem('authToken', authToken)));
   }
 
   login(credentials: CredentialsDTO): Observable<string> {

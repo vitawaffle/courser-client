@@ -15,23 +15,32 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SigninFormComponent {
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   passwordControl: AbstractControl = this.formBuilder.control(
     '',
-    [Validators.required, this.passwordValidator.getValidator()],
+    [
+      Validators.required,
+      this.passwordValidator.getValidator()
+    ],
   );
 
-  signinForm: FormGroup = this.formBuilder.group({
+  signinForm = this.formBuilder.group({
     email: [
       '',
-      [Validators.required, Validators.email],
+      [
+        Validators.required,
+        Validators.email
+      ],
       [this.uniqueEmailValidator.getValidator()]
     ],
     password: this.passwordControl,
     confirmedPassword: [
       '',
-      [Validators.required, this.equalsValidator.getValidator(this.passwordControl, 'passwordMismatch')]
+      [
+        Validators.required,
+        this.equalsValidator.getValidator(this.passwordControl, 'passwordMismatch')
+      ],
     ],
   });
 
@@ -53,27 +62,27 @@ export class SigninFormComponent {
     return this.signinForm.controls.confirmedPassword;
   }
 
-  get isEmailInvalid(): boolean {
+  get isEmailInvalid() {
     return this.isInvalid(this.emailControl);
   }
 
-  get isPasswordInvalid(): boolean {
+  get isPasswordInvalid() {
     return this.isInvalid(this.passwordControl);
   }
 
-  get isConfirmedPasswordInvalid(): boolean {
+  get isConfirmedPasswordInvalid() {
     return this.isInvalid(this.confirmedPasswordControl);
   }
 
-  get isSigninFormInvalid(): boolean {
+  get isSigninFormInvalid() {
     return this.signinForm.invalid;
   }
 
-  isInvalid(control: AbstractControl): boolean {
+  isInvalid(control: AbstractControl) {
     return this.formUtil.isControlInvalid(control);
   }
 
-  signin(): void {
+  signin() {
     this.isLoading = true;
 
     this.authService.signin(this.signinForm.value)

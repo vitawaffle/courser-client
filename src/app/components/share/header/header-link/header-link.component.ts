@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 export class HeaderLinkComponent {
 
   @Input()
-  url: string = '';
+  url = '';
 
   constructor(private router: Router) { }
 
-  get isActive(): boolean {
+  get isActive() {
     return this.router.url.startsWith(this.url);
   }
 

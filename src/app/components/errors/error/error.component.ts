@@ -8,9 +8,9 @@ import { Component, Input } from '@angular/core';
 export class ErrorComponent {
 
   @Input()
-  errorTitle: string = '';
+  errorTitle = '';
 
   @Input()
-  errorText: string = '';
+  errorText = '';
 
 }

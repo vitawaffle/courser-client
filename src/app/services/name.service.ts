@@ -17,13 +17,16 @@ export class NameService {
     return this.httpClient.get<NameDTO[]>('/names/me');
   }
 
+  /*
+   * TODO Need to refactor
+   */
   saveName(name: NameDTO, {
     onSuccess,
     onFinal,
     onError,
     onBadRequest,
-  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onBadRequest'> = {}): void {
-    this.httpClient.post<NameEntity>('/names/me', name).pipe(catchError((error: any) => {
+  }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError' | 'onBadRequest'> = {}) {
+    this.httpClient.post<NameEntity>('/names/me', name).pipe(catchError(error => {
       switch (error.status) {
         case 400:
           if (onBadRequest) {
@@ -41,19 +44,22 @@ export class NameService {
       if (onFinal) {
         onFinal();
       }
-    })).subscribe((name: NameEntity) => {
+    })).subscribe(() => {
       if (onSuccess) {
         onSuccess();
       }
     });
   }
 
+  /*
+   * TODO Need to refactor
+   */
   deleteName(languageId: number, {
     onSuccess,
     onFinal,
     onError,
   }: Pick<HandlingArguments, 'onSuccess' | 'onFinal' | 'onError'> = {}) {
-    this.httpClient.delete(`/names/me/${languageId}`).pipe(catchError((error: any) => {
+    this.httpClient.delete(`/names/me/${languageId}`).pipe(catchError(error => {
       if (onError) {
         onError(error);
       }

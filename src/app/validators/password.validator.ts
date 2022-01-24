@@ -10,7 +10,7 @@ export class PasswordValidator implements Validator {
 
     constructor(private configurationService: ConfigurationService) { }
 
-    getValidator(errorName: string = 'password'): ValidatorFn {
+    getValidator(errorName = 'password'): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null =>
             this.configurationService.activePasswordRules.find(rule => !rule.isValid(control.value))
                 ? { [errorName]: true }

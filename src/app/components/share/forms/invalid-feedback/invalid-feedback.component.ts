@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormBuilder } from '@angular/forms';
-import { FormUtil } from '../../../../utils/form.util';
+import { FormUtil } from 'src/app/utils/form.util';
 
 @Component({
   selector: '[app-invalid-feedback]',
@@ -13,11 +13,11 @@ export class InvalidFeedbackComponent {
   control: AbstractControl = this.formBuilder.control('');
 
   @Input()
-  errorName: string = '';
+  errorName = '';
 
   constructor(private formBuilder: FormBuilder, private formUtil: FormUtil) { }
 
-  get isShown(): boolean {
+  get isShown() {
     return this.formUtil.isControlInvalid(this.control) && this.control.hasError(this.errorName);
   }
 

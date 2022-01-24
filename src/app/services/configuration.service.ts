@@ -19,13 +19,13 @@ export class ConfigurationService {
     this.loadPasswordRules();
   }
 
-  get activePasswordRules(): PasswordRule[] {
+  get activePasswordRules() {
     return this._activePasswordRules;
   }
 
-  loadPasswordRules(): void {
+  loadPasswordRules() {
     this.httpClient.get<PasswordRulesDTO>('/configuration/password-rules')
-      .pipe(map((rules: PasswordRulesDTO) => {
+      .pipe(map(rules => {
         const activePasswordRules: PasswordRule[] = [];
         if (rules.HasBigLetterPasswordRule === 'true') {
           activePasswordRules.push(new HasBigLetterPasswordRule());
@@ -40,7 +40,7 @@ export class ConfigurationService {
           activePasswordRules.push(new LengthPasswordRule(parseInt(rules.LengthPasswordRule)));
         }
         return activePasswordRules;
-      })).subscribe((rules: PasswordRule[]) => this._activePasswordRules = rules);
+      })).subscribe(rules => this._activePasswordRules = rules);
   }
 
 }

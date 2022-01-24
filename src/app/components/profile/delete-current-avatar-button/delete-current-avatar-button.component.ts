@@ -10,15 +10,15 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DeleteCurrentAvatarButtonComponent {
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(private avatarService: AvatarService, private authService: AuthService) { }
 
-  get isDisabled(): boolean {
+  get isDisabled() {
     return false;
   }
 
-  handleClick(): void {
+  handleClick() {
     this.isLoading = true;
     this.avatarService.deleteCurrentAvatar()
       .pipe(finalize(() => this.isLoading = false))

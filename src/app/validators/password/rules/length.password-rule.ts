@@ -4,7 +4,7 @@ export class LengthPasswordRule implements PasswordRule {
 
     constructor(private minimalPasswordLength: number) { }
 
-    isValid(value: string): boolean {
+    isValid(value: string) {
         return value.length >= this.minimalPasswordLength;
     }
 

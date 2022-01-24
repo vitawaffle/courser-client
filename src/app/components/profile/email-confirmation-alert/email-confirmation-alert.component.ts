@@ -10,31 +10,31 @@ import { EmailService } from 'src/app/services/email.service';
 })
 export class EmailConfirmationAlertComponent implements OnInit {
 
-  isCanBeResendLoading: boolean = false;
+  isCanBeResendLoading = false;
 
   canBeResend?: Date;
 
-  isTimerActive: boolean = false;
+  isTimerActive = false;
 
   timeLeft?: number;
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(private emailService: EmailService, private authService: AuthService) { }
 
-  get isResendButtonDisabled(): boolean {
+  get isResendButtonDisabled() {
     return this.isCanBeResendLoading || this.isLoading || this.isTimerActive;
   }
 
-  get isShown(): boolean {
+  get isShown() {
     return !!this.authService.user && !this.authService.user.emailConfirmedAt;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.init();
   }
 
-  loadCanBeResend(onFinal?: () => void): void {
+  loadCanBeResend(onFinal?: () => void) {
     this.isCanBeResendLoading = true;
     this.emailService.getCanBeResend().pipe(finalize(() => {
       if (onFinal) {
@@ -46,7 +46,7 @@ export class EmailConfirmationAlertComponent implements OnInit {
     });
   }
 
-  startTimer(canBeResend: Date): void {
+  startTimer(canBeResend: Date) {
     this.isTimerActive = true;
     const interval = setInterval(() => {
       this.timeLeft = Math.trunc((canBeResend.getTime() - Date.now()) / 1000);
@@ -58,7 +58,7 @@ export class EmailConfirmationAlertComponent implements OnInit {
     }, 1000);
   }
 
-  init(): void {
+  init() {
     this.loadCanBeResend(() => {
       if (this.canBeResend) {
         this.startTimer(this.canBeResend);
@@ -66,7 +66,7 @@ export class EmailConfirmationAlertComponent implements OnInit {
     });
   }
 
-  resendConfirmationEmail(): void {
+  resendConfirmationEmail() {
     this.isLoading = true;
     this.emailService.resendConfirmationEmail({
       onFinal: () => {
